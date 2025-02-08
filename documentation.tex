@@ -230,7 +230,7 @@ v0 = np.array([0, v_perihelion, 0])  # tangential velocity at perihelion
             \end{figure}
 
         \subsection{Simulace}
-            Integrace se provádí pomocí funkce \texttt{simulate\_orbit()}, která jako vstupní parametry přijímá \texttt{alpha}, \texttt{beta}, \texttt{$\text{N}_\text{T}$} a \texttt{$\text{N}_\text{dt}$}. Tato funkce vrací vektor polohy Merkuru v průběhu času $\vec{r}$. 
+            Integrace se provádí pomocí funkce \texttt{simulate\_orbit()}, která jako vstupní parametry přijímá $\alpha$, $\beta$, $\text{N}_\text{T}$ a $\text{N}_\text{dt}$. Tato funkce vrací vektor polohy Merkuru v průběhu času $\vec{r}$. 
             
             
 \begin{lstlisting}[language=Python, caption={Simulace oběhu}]      
@@ -252,7 +252,7 @@ def simulate_orbit(alpha, beta, N_T, N_dt):
     return r    
 \end{lstlisting}
             
-            Funkce vypočítá celkovou dobu integrace \texttt{T} a integrační krok \texttt{dt} pomocí funkce \texttt{time\_parameters()}, která jako vstup přijme \texttt{$\text{N}_\text{T}$} a \texttt{$\text{N}_\text{dt}$} a vrátí \texttt{T}, \texttt{dt} a počet integračních kroků \texttt{steps}. 
+            Funkce vypočítá celkovou dobu integrace $T$ a integrační krok $dt$ pomocí funkce \texttt{time\_parameters()}, která jako vstup přijme $\text{N}_\text{T}$ a $\text{N}_\text{dt}$ a vrátí $T$, $dt$ a počet integračních kroků $steps$. 
 
 \begin{lstlisting}[language=Python, caption={Parametry integrace}]
 def time_parameters(N_T, N_dt):
@@ -266,7 +266,7 @@ def time_parameters(N_T, N_dt):
 
             Funkce \texttt{simulate\_orbit()} vytvoří pole \texttt{r} a \texttt{v} pro uložení vektorových dat polohy a rychlosti. Jako počáteční vektory bereme jejich hodnoty v perehelu vypočtené dříve. Funkce pak pomocí cyklu \texttt{acceleration()} vypočítá zrychlení pro každou polohu planety při jejím oběhu. 
 
-            Tato funkce je nejdůležitější, protože je zodpovědná za precesi Merkurova perehelia. Funkce přijímá jako vstup vektor polohy planety \texttt{r}, rychlost \texttt{v} a koeficienty \texttt{alpha} a \texttt{beta}. Funkce provede vektorové transformace pro výpočet momentu hybnosti \texttt{L} a vypočítá jej podle vzorce (\refeq{eq:angular_momentum}). Dále funkce vypočítá korekční člen v závorkách v rovnici (\refeq{eq:motion_corr}). Poté funkce vypočítá vektor zrychlení \texttt{a} podle vzorce (\refeq{eq:motion_corr}) a vrátí jeho hodnotu.
+            Tato funkce je nejdůležitější, protože je zodpovědná za precesi Merkurova perehelia. Funkce přijímá jako vstup vektor polohy planety $\vec{r}$, rychlost $\dot{\vec{r}}$ a koeficienty $\alpha$ a $\beta$. Funkce provede vektorové transformace pro výpočet momentu hybnosti $L$ a vypočítá jej podle vzorce (\refeq{eq:angular_momentum}). Dále funkce vypočítá korekční člen v závorkách v rovnici (\refeq{eq:motion_corr}). Poté funkce vypočítá vektor zrychlení \texttt{a} podle vzorce (\refeq{eq:motion_corr}) a vrátí jeho hodnotu.
 
 \begin{lstlisting}[language=Python, caption={Výpočet zrychlení}]
 def acceleration(r, v, alpha, beta):
@@ -381,14 +381,14 @@ def calculating_perihelion_angles(positions , uncertainties):
             Pak úhel posunu perehelia za století v akresekundách je roven:
 
             \begin{equation}
-                \varphi = \frac{\varphi_{\text{deg}}}{T_{\text{rel}}} \times 3600 \times 100 \frac{(k_{\beta}, k_{\alpha})}{(\alpha, \beta)}
+                \varphi = \varphi_{\text{deg}} \times 3600 \frac{100}{T_{\text{rel}}} \frac{(k_{\beta}, k_{\alpha})}{(\alpha, \beta)}
                 \label{eq:phi}
             \end{equation}
 
             Poslední násobitel v rovnici (\refeq{eq:phi}) je nutný pro škálování výsledku na koeficienty $\alpha$ a $\beta$. Z (\refeq{eq:alpha_beta}) vyplývá, že $k_{\alpha} = 0$ a $k_{\beta} = 3$. Hodnoty $\alpha$ a $\beta$ budou vysvětleny a vypočteny v následující části. Rovnice (\refeq{eq:phi}) bude vypadat takto:
 
             \begin{equation}
-                \varphi = \frac{\varphi_{\text{deg}}}{T_{\text{rel}}} \times 3600 \times 100 \frac{3}{\beta}
+                \varphi = \varphi_{\text{deg}} \times 3600 \frac{100}{T_{\text{rel}}} \frac{3}{\beta}
                 \label{eq:phi_final}
             \end{equation}
 
@@ -415,21 +415,21 @@ def calculating_perihelion_angles(positions , uncertainties):
                 \label{fig:phi_beta}
             \end{figure}
 
-            Vyvstává otázka, jak zvolit optimální hodnoty koeficientů $\alpha$ a $\beta$, aby se průměrná hodnota úhlu posunutí perehelia co nejméně lišila od teoretické hodnoty? Za tímto účelem jsem provedl sérii simulací s různými hodnotami $\beta$ při pevných hodnotách $\alpha = 0$ a $\alpha$ při pevných hodnotách $\beta = 0$. Simulace byly provedeny pro různé hodnoty integračních kroků $dt/N_{\text{dt}}$. Integrační interval byl ve všech situacích stejný $TN_{\text{T}} = 90T$.  
+            Vyvstává otázka, jak zvolit optimální hodnoty koeficientů $\alpha$ a $\beta$, aby se průměrná hodnota úhlu posunutí perehelia co nejméně lišila od teoretické hodnoty? Za tímto účelem jsem provedl sérii simulací s různými hodnotami $\beta$ při pevných hodnotách $\alpha = 0$ a $\alpha$ při pevných hodnotách $\beta = 0$. Simulace byly provedeny pro různé hodnoty integračních kroků $dt/N_{\text{dt}}$. Integrační interval byl ve všech situacích stejný $N_{\text{T}} = 150$.  
             
             Výsledky jsou uvedeny na obrázcích (\ref{fig:phi_alpha_diff}) a (\ref{fig:phi_beta_diff}). Výpočty byly provedeny pomocí funkce \texttt{getting\_angle\_data()}, která vypočítá hodnoty úhlů perehelia pro různé hodnoty $\alpha$ a $\beta$, načež funkce \texttt{plotting\_difference()} vypočítá relativní odchylku od teoretické hodnoty a vykreslí závislost této odchylky na $\alpha$ a $\beta$. 
 
             \begin{figure}
                 \centering
                 \includegraphics[width=0.5\textwidth]{phi_alpha_diff.png}
-                \caption{Závislost odchylky úhlu posunu perehelia od teoretické hodnoty na hodnotě koeficientu $\beta$ při $\alpha = 0$.}
+                \caption{Závislost odchylky úhlu posunu perehelia od teoretické hodnoty na hodnotě koeficientu $\alpha$ při $\beta = 0$.}
                 \label{fig:phi_alpha_diff}
             \end{figure}
 
             \begin{figure}
                 \centering
                 \includegraphics[width=0.5\textwidth]{phi_beta_diff.png}
-                \caption{Závislost odchylky úhlu posunu perehelia od teoretické hodnoty na hodnotě koeficientu $\alpha$ při $\beta = 0$.}
+                \caption{Závislost odchylky úhlu posunu perehelia od teoretické hodnoty na hodnotě koeficientu $\beta$ při $\alpha = 0$.}
                 \label{fig:phi_beta_diff}
             \end{figure}
 
@@ -476,7 +476,7 @@ def calculating_perihelion_angles(positions , uncertainties):
             Je tedy vidět, že hodnoty $\text{N}_{\text{T}}$ a $\text{N}_{\text{\text{dt}}}$ nalezené v globálním minimu jsou tedy pro tento problém optimální.
 
     \section{Závěr}
-        Výsledky simulace ukazují uspokojivé výsledky, které se shodují s teoretickými údaji z literatury $\varphi = 43.1(3) ~[\text{arcsec/století}]$. Pro tento problém jsme také našli optimální hodnoty parametrů $\alpha$ a $\beta$: $\alpha = 0$, $\beta = 1.1 \times 10^5$. Také jsme našli optimální hodnoty $\text{N}_{\text{T}}$ a $\text{N}_{\text{dt}}$: $\text{N}_{\text{dt}}$: $\text{N}_{\text{T}} = 150$, $\text{N}_{\text{dt}} = 150$. To vše nás vede k závěru, že tento model je pro danou úlohu vyhovující. 
+        Výsledky simulace ukazují uspokojivé výsledky, které se shodují s teoretickými údaji z literatury $\varphi = 43.1(3) ~[\text{arcsec/století}]$. Pro tento problém jsem také našel optimální hodnoty parametrů $\alpha$ a $\beta$: $\alpha = 0$, $\beta = 1.1 \times 10^5$. Také jsem našel optimální hodnoty $\text{N}_{\text{T}} = 150$, $\text{N}_{\text{dt}} = 150$. To vše nás vede k závěru, že tento model je pro danou úlohu vyhovující. 
         
         Mezi věci, které lze zlepšit, patří doba výpočtu. Při hledání optimálních parametrů v části \ref{sec:optimal} bylo globální minimum nalezeno v suboptimálních mezích z hlediska výpočetního času. Zároveň se ukázalo, že hodnoty na výstupu jsou poměrně přesné. Možná, že změna některých kroků v procesu integrace by mohla proces optimalizovat lepším způsobem. 
 
